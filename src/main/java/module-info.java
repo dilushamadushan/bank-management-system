@@ -1,6 +1,8 @@
 module com.bank {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
+    requires java.desktop;
 
 
     opens com.bank to javafx.fxml;
