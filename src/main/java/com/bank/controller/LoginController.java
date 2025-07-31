@@ -1,5 +1,7 @@
 package com.bank.controller;
 
+import com.bank.models.RegularUser;
+import com.bank.models.User;
 import com.bank.services.AuthService;
 import com.bank.utils.BUtils;
 import javafx.event.ActionEvent;
@@ -40,9 +42,12 @@ public class LoginController implements Initializable {
     @FXML
     void loginCon(ActionEvent event) {
         BUtils bu =  new BUtils();
+        String username = userName.getText();
+        String pass = password.getText();
         try {
-            if(authService.login(userName.getText(),password.getText())){
+            if(authService.login(username, pass)){
                 bu.showMessage("Login Successful!", "You have successfully logged in.");
+                User user = new RegularUser(username);
             }else {
                 bu.showMessage("Login Failed!", "You have not logged in.");
             }

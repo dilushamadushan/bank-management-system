@@ -9,3 +9,27 @@
 .login_btn:hover{
     -fx-background-color: #8c0a0a;
 }
+
+.dashBord{
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(one-pass-box,black,10,0,0,3);
+}
+
+.nav-btn{
+    -fx-background-color: #efe8e8;
+}
+.nav-btn:hover {
+    -fx-background-color: rgba(19, 59, 197, 0.11);
+    -fx-border-color: #690808;
+    -fx-border-width: 0 0 0 4px; /* top right bottom left */
+}
+
+.dashBTN{
+    -fx-background-color: #dfefe4;
+}
+
+.dashBTN:hover {
+    -fx-background-color: rgba(135, 227, 161, 0.11);
+    -fx-border-color: #690808;
+    -fx-border-width: 0 0 4px 0; /* top right bottom left */
+}

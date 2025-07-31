@@ -7,4 +7,7 @@ public class RegularUser extends User{
         super(username, nicNo, accountNumber, password, contactNo);
     }
 
+    public RegularUser(String username) {
+        super(username);
+    }
 }

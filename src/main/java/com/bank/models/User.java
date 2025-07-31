@@ -15,6 +15,10 @@ public abstract class User {
         this.contactNo = contactNo;
     }
 
+    public User(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
