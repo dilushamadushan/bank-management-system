@@ -1,9 +1,12 @@
 package com.bank.controller;
 
+import com.bank.Main;
 import com.bank.models.RegularUser;
 import com.bank.models.User;
+import com.bank.models.ViewModel;
 import com.bank.services.AuthService;
 import com.bank.utils.BUtils;
+import com.bank.view.ViewsFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,10 +47,29 @@ public class LoginController implements Initializable {
         BUtils bu =  new BUtils();
         String username = userName.getText();
         String pass = password.getText();
+
         try {
             if(authService.login(username, pass)){
                 bu.showMessage("Login Successful!", "You have successfully logged in.");
-                User user = new RegularUser(username);
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/bank/views/account.fxml"));
+                    Parent root = loader.load();
+
+                    AccountController ac = loader.getController();
+                    ac.setRegularUser(new RegularUser(username));
+                    ac.setTagTitle();
+
+                    Scene scene = new Scene(root,800,600);
+                    stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    stage = (Stage) ((Node)  event.getSource()).getScene().getWindow();
+                    stage.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
             }else {
                 bu.showMessage("Login Failed!", "You have not logged in.");
             }
@@ -58,18 +80,9 @@ public class LoginController implements Initializable {
 
     @FXML
     private void register(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/bank/views/register.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Register");
-            stage.setScene(new Scene(root));
-            stage.show();
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ViewModel.getInstance().getViewsFactory().showWindow("/com/bank/views/register.fxml","Bank Management System");
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
 
 

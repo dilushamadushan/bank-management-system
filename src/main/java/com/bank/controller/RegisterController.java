@@ -3,8 +3,10 @@ package com.bank.controller;
 import com.bank.Main;
 import com.bank.models.RegularUser;
 import com.bank.models.User;
+import com.bank.models.ViewModel;
 import com.bank.services.AuthService;
 import com.bank.utils.BUtils;
+import com.bank.view.ViewsFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -110,13 +112,8 @@ public class RegisterController implements Initializable {
     }
 
     public void log(Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/login.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
+        ViewModel.getInstance().getViewsFactory().showWindow("views/login.fxml","Bank Management System");
         Stage stage = new Stage();
-        stage.setTitle("Main!");
-        stage.setScene(new Scene(root, 600, 400));
-        stage.show();
-
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

@@ -3,6 +3,7 @@ module com.bank {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires jdk.jfr;
 
 
     opens com.bank to javafx.fxml;
