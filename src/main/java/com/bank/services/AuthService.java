@@ -3,8 +3,6 @@ import com.bank.models.User;
 import com.bank.utils.BUtils;
 import com.bank.utils.Conn;
 import com.bank.utils.HashUtil;
-
-import javax.swing.*;
 import java.security.MessageDigest;
 import java.sql.*;
 
