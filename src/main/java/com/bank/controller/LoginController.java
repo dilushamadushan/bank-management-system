@@ -59,6 +59,7 @@ public class LoginController implements Initializable {
                     AccountController ac = loader.getController();
                     ac.setRegularUser(new RegularUser(username));
                     ac.setTagTitle();
+                    ac.setAccountDetails();
 
                     Scene scene = new Scene(root,800,600);
                     stage = new Stage();
