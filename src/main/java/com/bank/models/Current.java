@@ -10,10 +10,9 @@ public class Current extends Account{
 
     @Override
     public void withdraw(double amount) {
-        if(amount <= balance + overdraftLimit) {
-            balance = balance - amount;
-        }else {
-            System.out.println("Insufficient balance");
+        if(balance + overdraftLimit < amount) {
+            throw new IllegalArgumentException("Insufficient funds including overdraft limit.");
         }
+        balance -= amount;
     }
 }

@@ -8,10 +8,9 @@ public class Saving extends Account{
 
     @Override
     public void withdraw(double amount) {
-        if(amount <= balance) {
-            balance = balance - amount;
-        }else  {
-            System.out.println("Insufficient balance");
+        if (balance < amount) {
+            throw new IllegalArgumentException("Insufficient funds.");
         }
+        balance -= amount;
     }
 }
