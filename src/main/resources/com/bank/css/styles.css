@@ -29,9 +29,8 @@
 }
 
 .dashBTN:hover {
-    -fx-background-color: rgba(135, 227, 161, 0.11);
-    -fx-border-color: #690808;
-    -fx-border-width: 0 0 4px 0; /* top right bottom left */
+    -fx-background-color: #bcc5bf;
+    -fx-border-width: 0 0 0 0; /* top right bottom left */
 }
 
 .bold{

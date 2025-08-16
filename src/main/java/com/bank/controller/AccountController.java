@@ -2,6 +2,7 @@ package com.bank.controller;
 
 import com.bank.models.Transfer;
 import com.bank.services.TransferManger;
+import com.bank.utils.BUtils;
 import javafx.event.ActionEvent;
 import com.bank.models.Account;
 import com.bank.models.RegularUser;
@@ -9,7 +10,6 @@ import com.bank.services.AccountManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,31 +88,47 @@ public class AccountController{
     private AccountManager accManager;
     private Transfer tr;
     private RegularUser regularUser;
+    private BUtils sh = new BUtils();
 
     @FXML
     void Pay_Conform(ActionEvent event){
-        mainDash.setVisible(false);
-        fundTransferPane.setVisible(false);
-        fundTransferPane1.setVisible(true);
-
         String fromAcc = accFrom.getText();
-        String to_Acc = AccTo.getText();
-        double transfer_ammount = Double.parseDouble(TransAmount.getText());
+        String toAcc = AccTo.getText();
         String trans_remark = transRemark.getText();
         String date = currentDate();
 
-        tr = new Transfer(fromAcc,to_Acc,transfer_ammount,trans_remark,date);
+        double transfer_ammount = 0;
+        try {
+            transfer_ammount = Double.parseDouble(TransAmount.getText());
+        } catch (NumberFormatException e) {
+            sh.showMessage("Error", "Please enter a valid amount.");
+            return;
+        }
+
+        if(fromAcc.isEmpty() && toAcc.isEmpty() && transfer_ammount <= 0){
+            sh.showMessage("Error", "Please enter all details correctly.");
+            return;
+        }
+
+        tr = new Transfer(fromAcc,toAcc,transfer_ammount,trans_remark,date);
         setTr(tr);
 
         this.from_Acc.setText(tr.get_fromAcc());
         this.to_Acc.setText(tr.get_toAcc());
         ammount_de.setText(String.valueOf(tr.get_amount()));
         remark_de.setText(tr.get_remarker());
+
+        mainDash.setVisible(false);
+        fundTransferPane.setVisible(false);
+        fundTransferPane1.setVisible(true);
     }
 
     @FXML
     void paymentCansal(ActionEvent event) {
-
+        mainDash.setVisible(false);
+        transferDash.setVisible(true);
+        fundTransferPane.setVisible(true);
+        fundTransferPane1.setVisible(false);
     }
 
     @FXML
@@ -120,6 +136,11 @@ public class AccountController{
         trm = new  TransferManger();
         try {
             trm.transfer(tr,regularUser.getUsername());
+            sh.showMessage("Successfully","Successfully transfer successfully");
+            mainDash.setVisible(true);
+            transferDash.setVisible(false);
+            fundTransferPane.setVisible(false);
+            fundTransferPane1.setVisible(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -129,6 +150,8 @@ public class AccountController{
     void transferBtn(ActionEvent event) {
         mainDash.setVisible(false);
         transferDash.setVisible(true);
+        fundTransferPane.setVisible(true);
+        fundTransferPane1.setVisible(false);
         accManager = new AccountManager();
         acc = accManager.getAccountByUsername(regularUser.getUsername());
         accFrom.setText(acc.getAccountNumber());
@@ -167,14 +190,17 @@ public class AccountController{
         accManager = new AccountManager();
         acc = accManager.getAccountByUsername(regularUser.getUsername());
 
+        String accNum = acc.getAccountNumber();
+        String maskedAcc = "**** **** **** " + accNum.substring(Math.max(0, accNum.length() - 4));
+
         if("Savings".equalsIgnoreCase(acc.getType())){
-            s_accNo.setText("**** **** **** "+acc.getAccountNumber());
+            s_accNo.setText(maskedAcc);
             s_balance.setText(String.valueOf(acc.getBalance()) + " $");
             c_accNo.setText("**** **** **** ****");
             c_balance.setText("0000.00 $");
         }
         else if("Current".equalsIgnoreCase(acc.getType())){
-            c_accNo.setText("**** **** **** "+acc.getAccountNumber());
+            c_accNo.setText(maskedAcc);
             c_balance.setText(String.valueOf(acc.getBalance()) + " $");
             s_accNo.setText("**** **** **** ****");
             s_balance.setText("0000.00 $");
@@ -182,10 +208,9 @@ public class AccountController{
     }
 
     public String currentDate(){
-        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();   // ✅ fixed shadowing
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH.mm, d MMMM yyyy", Locale.ENGLISH);
-        String formattedDate = currentDate.format(formatter);
-        return formattedDate;
+        return now.format(formatter);
     }
 
 }

@@ -41,7 +41,7 @@ public class AccountManager {
     }
 
     public Account checkTrasferAccount(String accountNumber){
-        String accSql = "SELECT * FROM accounts a INNER JOIN users u ON a.account_number = u.account_number WHERE a.account_number = ?";
+        String accSql = "SELECT * FROM accounts WHERE account_number = ?";
         try {
             PreparedStatement pst = con.prepareStatement(accSql);
             pst.setString(1, accountNumber);

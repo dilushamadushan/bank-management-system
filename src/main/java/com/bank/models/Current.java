@@ -13,6 +13,6 @@ public class Current extends Account{
         if(balance + overdraftLimit < amount) {
             throw new IllegalArgumentException("Insufficient funds including overdraft limit.");
         }
-        balance -= amount;
+        balance = balance - amount;
     }
 }
