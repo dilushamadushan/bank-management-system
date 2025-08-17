@@ -1,8 +1,11 @@
 package com.bank.view;
 
 import com.bank.Main;
+import com.bank.controller.TransactionController;
+import com.bank.models.Transfer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,5 +26,17 @@ public class ViewsFactory {
         stage.show();
     }
 
+    public static AnchorPane loadTransactionCard(Transfer transfer) {
+        try {
+            FXMLLoader loder = new FXMLLoader(ViewsFactory.class.getResource("/com/bank/views/transaction.fxml"));
+            AnchorPane card = loder.load();
 
+            TransactionController controller = loder.getController();
+            controller.setTransactionData(transfer);
+            return  card;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

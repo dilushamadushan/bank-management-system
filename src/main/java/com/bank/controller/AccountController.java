@@ -1,8 +1,10 @@
 package com.bank.controller;
 
 import com.bank.models.Transfer;
+import com.bank.services.TransactionManager;
 import com.bank.services.TransferManger;
 import com.bank.utils.BUtils;
+import com.bank.view.ViewsFactory;
 import javafx.event.ActionEvent;
 import com.bank.models.Account;
 import com.bank.models.RegularUser;
@@ -13,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 public class AccountController{
@@ -25,6 +28,12 @@ public class AccountController{
 
     @FXML
     private Button transaction;
+
+    @FXML
+    private AnchorPane transactionHistory;
+
+    @FXML
+    private AnchorPane transactionPane;
 
     @FXML
     private AnchorPane transferDash;
@@ -167,9 +176,19 @@ public class AccountController{
         if(event.getSource()==dashbord){
             mainDash.setVisible(true);
             transferDash.setVisible(false);
+            transactionPane.setVisible(false);
+            fundTransferPane.setVisible(false);
+            fundTransferPane1.setVisible(false);
         } else if(event.getSource() == profile) {
             mainDash.setVisible(false);
+            transactionPane.setVisible(false);
             transferDash.setVisible(false);
+            fundTransferPane.setVisible(false);
+            fundTransferPane1.setVisible(false);
+        } else if (event.getSource() == transaction) {
+            mainDash.setVisible(false);
+            transactionPane.setVisible(true);
+            loadTransaction();
         }
     }
 
@@ -207,8 +226,26 @@ public class AccountController{
         }
     }
 
+    public void loadTransaction(){
+        TransactionManager tm = new TransactionManager();
+        accManager = new AccountManager();
+        acc = accManager.getAccountByUsername(regularUser.getUsername());
+
+        List<Transfer> list = tm.getTransactions(acc.getAccountNumber());
+        transactionHistory.getChildren().clear();
+        double yOffset = 0;
+        for (Transfer trans : list) {
+            AnchorPane card = ViewsFactory.loadTransactionCard(trans);
+            if(card != null){
+                card.setLayoutY(yOffset);
+                yOffset += 65;
+                transactionHistory.getChildren().add(card);
+            }
+        }
+    }
+
     public String currentDate(){
-        LocalDateTime now = LocalDateTime.now();   // ✅ fixed shadowing
+        LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH.mm, d MMMM yyyy", Locale.ENGLISH);
         return now.format(formatter);
     }

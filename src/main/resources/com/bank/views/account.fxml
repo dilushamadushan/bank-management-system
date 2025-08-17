@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -268,6 +269,15 @@
                   <Font size="24.0" />
                </font>
             </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="transactionPane" layoutX="209.0" layoutY="118.0" prefHeight="472.0" prefWidth="586.0" style="-fx-background-color: #fff;" visible="false">
+         <children>
+            <ScrollPane layoutX="6.0" layoutY="8.0" prefHeight="458.0" prefWidth="572.0" style="-fx-background-color: #fff;">
+              <content>
+                <AnchorPane fx:id="transactionHistory" minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="574.0" style="-fx-background-color: #fff;" />
+              </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
    </children>

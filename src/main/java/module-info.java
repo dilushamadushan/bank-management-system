@@ -11,6 +11,8 @@ module com.bank {
 
     exports com.bank;
     exports com.bank.controller;
+    exports com.bank.view;
 
     opens com.bank.controller to javafx.fxml;
+    opens com.bank.view to javafx.fxml;
 }
