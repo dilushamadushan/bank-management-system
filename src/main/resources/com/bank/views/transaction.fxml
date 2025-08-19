@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="cartTransaction" prefHeight="60.0" prefWidth="555.0" style="-fx-background-radius: 10; -fx-background-color: #dfefe4;" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bank.controller.TransactionController">
+   <children>
+      <ImageView fitHeight="37.0" fitWidth="38.0" layoutX="14.0" layoutY="13.0">
+         <image>
+            <Image url="@../images/transaction.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="transDate" layoutX="401.0" layoutY="20.0" prefHeight="22.0" prefWidth="138.0" styleClass="bold" stylesheets="@../css/styles.css">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="transferAccount" layoutX="202.0" layoutY="21.0" styleClass="bold" stylesheets="@../css/styles.css" text="Account NO :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="found" layoutX="81.0" layoutY="21.0" styleClass="bold" stylesheets="@../css/styles.css" textFill="#227b07">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="accNo" layoutX="306.0" layoutY="21.0" styleClass="bold" stylesheets="@../css/styles.css">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
